@@ -26,7 +26,7 @@ import com.alibaba.nacos.api.config.annotation.NacosConfigurationProperties;
  * @author <a href="mailto:liaochunyhm@live.com">liaochuntao</a>
  * @since
  */
-@NacosConfigurationProperties(dataId = "apple", type = ConfigType.YAML, ignoreNestedProperties = true)
+@NacosConfigurationProperties(dataId = "apple", type = ConfigType.YAML, ignoreNestedProperties = true, autoRefreshed = true)
 public class Apple {
 
 	private List<String> list;

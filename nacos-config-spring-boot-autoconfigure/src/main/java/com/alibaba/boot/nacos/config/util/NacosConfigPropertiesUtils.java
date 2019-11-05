@@ -36,8 +36,7 @@ public class NacosConfigPropertiesUtils {
 
 	private static final String PROPERTIES_PREFIX = "nacos";
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(NacosConfigPropertiesUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(NacosConfigPropertiesUtils.class);
 
 	private static Set<String> OBJ_FIELD_NAME = new HashSet<>();
 
@@ -48,22 +47,20 @@ public class NacosConfigPropertiesUtils {
 		}
 	}
 
-	public static NacosConfigProperties buildNacosConfigProperties(
-			ConfigurableEnvironment environment) {
+	public static NacosConfigProperties buildNacosConfigProperties(ConfigurableEnvironment environment) {
 		NacosConfigProperties bean = new NacosConfigProperties();
 
-		AttributeExtractTask task = new AttributeExtractTask(PROPERTIES_PREFIX,
-				environment);
+		AttributeExtractTask task = new AttributeExtractTask(PROPERTIES_PREFIX, environment);
 
 		try {
 			Properties properties = new Properties();
 			properties.putAll(task.call());
 			BinderUtils.bind(bean, NacosConfigConstants.PREFIX, properties);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 		logger.info("nacosConfigProperties : {}", bean);
+		System.out.println("nacosConfigProperties : "+bean);
 		return bean;
 	}
 

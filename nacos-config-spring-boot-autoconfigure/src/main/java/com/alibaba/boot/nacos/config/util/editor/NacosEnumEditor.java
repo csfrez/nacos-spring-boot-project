@@ -29,12 +29,12 @@ import java.util.List;
  */
 public class NacosEnumEditor implements PropertyEditor {
 
-	private final List<PropertyChangeListener> listeners = new ArrayList();
-	private final Class type;
+	private final List<PropertyChangeListener> listeners = new ArrayList<>();
+	private final Class<? extends Enum<?>> type;
 	private final String[] tags;
 	private Object value;
 
-	public NacosEnumEditor(Class var1) {
+	public NacosEnumEditor(Class<? extends Enum<?>> var1) {
 		Object[] var2 = var1.getEnumConstants();
 		if (var2 == null) {
 			throw new IllegalArgumentException("Unsupported " + var1);
@@ -44,7 +44,7 @@ public class NacosEnumEditor implements PropertyEditor {
 			this.tags = new String[var2.length];
 
 			for (int var3 = 0; var3 < var2.length; ++var3) {
-				this.tags[var3] = ((Enum) var2[var3]).name();
+				this.tags[var3] = ((Enum<?>) var2[var3]).name();
 			}
 		}
 	}
@@ -83,12 +83,10 @@ public class NacosEnumEditor implements PropertyEditor {
 					return;
 				}
 
-				var3 = (PropertyChangeListener[]) this.listeners
-						.toArray(new PropertyChangeListener[var5]);
+				var3 = (PropertyChangeListener[]) this.listeners.toArray(new PropertyChangeListener[var5]);
 			}
 
-			PropertyChangeEvent var4 = new PropertyChangeEvent(this, (String) null, var2,
-					var1);
+			PropertyChangeEvent var4 = new PropertyChangeEvent(this, (String) null, var2, var1);
 			PropertyChangeListener[] var10 = var3;
 			int var6 = var3.length;
 
@@ -102,14 +100,23 @@ public class NacosEnumEditor implements PropertyEditor {
 
 	@Override
 	public String getAsText() {
-		return this.value != null ? ((Enum) this.value).name() : null;
+		return this.value != null ? ((Enum<?>) this.value).name() : null;
 	}
 
 	@Override
 	public void setAsText(String var1) {
-		this.setValue(var1 != null ? Enum.valueOf(this.type, var1.toUpperCase()) : null);
+		this.setValue(var1 != null ? valueOf(this.type, var1.toUpperCase()) : null);
 	}
-
+	private static Enum<?> valueOf(Class<? extends Enum<?>> enumType, String value) {
+		Enum<?>[] enumConstants= enumType.getEnumConstants();
+		for(Enum<?> e : enumConstants) {
+			if(e.name().equals(value)) {
+				return e;
+			}
+		}
+	    return null;
+	}
+	
 	@Override
 	public String[] getTags() {
 		return (String[]) this.tags.clone();

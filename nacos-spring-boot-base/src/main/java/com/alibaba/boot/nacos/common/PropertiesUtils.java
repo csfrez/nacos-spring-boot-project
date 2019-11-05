@@ -30,7 +30,7 @@ public class PropertiesUtils {
 
 	public static Map<Object, Object> extractSafeProperties(Properties properties) {
 		Map<Object, Object> result = new HashMap<>();
-		Enumeration enumeration = properties.propertyNames();
+		Enumeration<?> enumeration = properties.propertyNames();
 		while (enumeration.hasMoreElements()) {
 			String key = enumeration.nextElement().toString();
 			if (!PropertyKeyConst.SECRET_KEY.equals(key)) {

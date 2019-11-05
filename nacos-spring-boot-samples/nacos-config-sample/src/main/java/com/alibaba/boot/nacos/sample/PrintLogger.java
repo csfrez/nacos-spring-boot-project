@@ -22,7 +22,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
 
-import com.alibaba.nacos.api.config.annotation.NacosConfigListener;
 import com.alibaba.nacos.spring.util.parse.DefaultPropertiesConfigParse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,11 +40,11 @@ public class PrintLogger {
 
 	private static final String LOGGER_TAG = "logging.level.";
 
-	private LoggingSystem loggingSystem = LoggingSystem
-			.get(PrintLogger.class.getClassLoader());
+	private LoggingSystem loggingSystem = LoggingSystem.get(PrintLogger.class.getClassLoader());
 
-	@NacosConfigListener(dataId = "nacos.log", timeout = 5000)
+	//@NacosConfigListener(dataId = "nacos_test", timeout = 5000)
 	public void onChange(String newLog) throws Exception {
+		// System.out.println(newLog);
 		Properties properties = new DefaultPropertiesConfigParse().parse(newLog);
 		for (Object t : properties.keySet()) {
 			String key = String.valueOf(t);
@@ -65,15 +64,14 @@ public class PrintLogger {
 			public void run() {
 				while (true) {
 					try {
-						TimeUnit.SECONDS.sleep(5);
-					}
-					catch (InterruptedException e) {
+						TimeUnit.SECONDS.sleep(30);
+					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
-					logger.info("我是info级别日志");
-					logger.error("我是error级别日志");
-					logger.warn("我是warn级别日志");
-					logger.debug("我是debug级别日志");
+//					logger.debug("我是debug级别日志");
+//					logger.info("我是info级别日志");
+//					logger.warn("我是warn级别日志");
+					logger.error(Thread.currentThread().getName() +"==>我是error级别日志");
 				}
 			}
 		});

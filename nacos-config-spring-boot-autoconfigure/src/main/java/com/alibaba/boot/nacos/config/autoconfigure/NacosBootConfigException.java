@@ -22,6 +22,11 @@ package com.alibaba.boot.nacos.config.autoconfigure;
  */
 public class NacosBootConfigException extends RuntimeException {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4755690825520957181L;
+
 	public NacosBootConfigException(Throwable cause) {
 		super(cause);
 	}

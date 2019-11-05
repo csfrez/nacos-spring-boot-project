@@ -36,11 +36,9 @@ import org.springframework.core.env.ConfigurableEnvironment;
  * @author <a href="mailto:liaochunyhm@live.com">liaochuntao</a>
  * @since
  */
-public class NacosConfigApplicationInitializer
-		implements ApplicationContextInitializer<ConfigurableApplicationContext> {
+public class NacosConfigApplicationInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
-	private final Logger logger = LoggerFactory
-			.getLogger(NacosConfigApplicationInitializer.class);
+	private final Logger logger = LoggerFactory.getLogger(NacosConfigApplicationInitializer.class);
 
 	private ConfigurableEnvironment environment;
 
@@ -48,45 +46,34 @@ public class NacosConfigApplicationInitializer
 
 	private NacosConfigProperties nacosConfigProperties;
 
-	public NacosConfigApplicationInitializer(
-			NacosConfigEnvironmentProcessor configEnvironmentProcessor) {
+	public NacosConfigApplicationInitializer(NacosConfigEnvironmentProcessor configEnvironmentProcessor) {
 		this.processor = configEnvironmentProcessor;
 	}
 
 	@Override
 	public void initialize(ConfigurableApplicationContext context) {
-		final CacheableEventPublishingNacosServiceFactory singleton = CacheableEventPublishingNacosServiceFactory
-				.getSingleton();
+		final CacheableEventPublishingNacosServiceFactory singleton = CacheableEventPublishingNacosServiceFactory.getSingleton();
 		singleton.setApplicationContext(context);
 		environment = context.getEnvironment();
-		nacosConfigProperties = NacosConfigPropertiesUtils
-				.buildNacosConfigProperties(environment);
+		nacosConfigProperties = NacosConfigPropertiesUtils.buildNacosConfigProperties(environment);
 		processor.publishDeferService(context);
 		if (!enable()) {
 			logger.info("[Nacos Config Boot] : The preload configuration is not enabled");
-		}
-		else {
+		} else {
 			final Function<Properties, ConfigService> builder = new Function<Properties, ConfigService>() {
 				@Override
 				public ConfigService apply(Properties input) {
 					try {
 						return singleton.createConfigService(input);
-					}
-					catch (NacosException e) {
-						throw new NacosBootConfigException(
-								"ConfigService can't be created with properties : "
-										+ input,
-								e);
+					} catch (NacosException e) {
+						throw new NacosBootConfigException("ConfigService can't be created with properties : " + input, e);
 					}
 				}
 			};
-			final NacosConfigUtils configUtils = new NacosConfigUtils(
-					nacosConfigProperties, environment, builder);
+			final NacosConfigUtils configUtils = new NacosConfigUtils(nacosConfigProperties, environment, builder);
 			if (processor.enable()) {
-				configUtils
-						.addListenerIfAutoRefreshed(processor.getDeferPropertySources());
-			}
-			else {
+				configUtils.addListenerIfAutoRefreshed(processor.getDeferPropertySources());
+			} else {
 				configUtils.loadConfig();
 				configUtils.addListenerIfAutoRefreshed();
 			}

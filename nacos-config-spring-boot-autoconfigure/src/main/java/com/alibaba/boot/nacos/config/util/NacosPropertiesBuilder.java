@@ -75,7 +75,7 @@ public class NacosPropertiesBuilder {
 			return;
 		}
 
-		for (Map.Entry entry : sourceProperties.entrySet()) {
+		for (Map.Entry<Object, Object> entry : sourceProperties.entrySet()) {
 			String propertyName = (String) entry.getKey();
 			if (!targetProperties.containsKey(propertyName)) {
 				String propertyValue = (String) entry.getValue();

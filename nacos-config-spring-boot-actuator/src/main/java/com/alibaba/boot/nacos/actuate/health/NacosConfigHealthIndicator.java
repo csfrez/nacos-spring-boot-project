@@ -18,18 +18,16 @@ package com.alibaba.boot.nacos.actuate.health;
 
 import java.util.Properties;
 
+import org.springframework.boot.actuate.health.AbstractHealthIndicator;
+import org.springframework.boot.actuate.health.Health;
+import org.springframework.boot.actuate.health.HealthIndicator;
+
 import com.alibaba.boot.nacos.common.PropertiesUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.nacos.api.config.ConfigService;
 import com.alibaba.nacos.spring.factory.CacheableEventPublishingNacosServiceFactory;
 import com.alibaba.nacos.spring.factory.NacosServiceFactory;
 import com.alibaba.nacos.spring.metadata.NacosServiceMetaData;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.health.AbstractHealthIndicator;
-import org.springframework.boot.actuate.health.Health;
-import org.springframework.boot.actuate.health.HealthIndicator;
-import org.springframework.context.ApplicationContext;
 
 /**
  * Nacos Config {@link HealthIndicator}
@@ -38,8 +36,8 @@ import org.springframework.context.ApplicationContext;
  * @see HealthIndicator
  */
 public class NacosConfigHealthIndicator extends AbstractHealthIndicator {
-	@Autowired
-	private ApplicationContext applicationContext;
+//	@Autowired
+//	private ApplicationContext applicationContext;
 
 	private static final String UP_STATUS = "up";
 

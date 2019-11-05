@@ -34,18 +34,34 @@ public class TestController {
 	@NacosValue(value = "${people.enable:bbbbb}", autoRefreshed = true)
 	private String enable;
 
+	@NacosValue(value = "${name:aaaa}", autoRefreshed = true)
+	private String name;
+
 	@Autowired
 	private Apple apple;
 
+	@Autowired
+	private Foo foo;
+	
 	@RequestMapping()
 	@ResponseBody
 	public String testGet() {
-		return enable;
+		return this.enable;
+	}
+	
+	@GetMapping("/name")
+	public String getName() {
+		return name;
 	}
 
 	@GetMapping("/apple")
 	public Apple getApple() {
 		return apple;
+	}
+	
+	@GetMapping("/foo")
+	public Foo getFoo() {
+		return foo;
 	}
 
 }

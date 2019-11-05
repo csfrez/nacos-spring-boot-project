@@ -48,7 +48,7 @@ public class AttributeExtractTask implements Callable<Map<String, Object>> {
 		List<Map<String, Object>> defer = new LinkedList<>();
 
 		MutablePropertySources mutablePropertySources = environment.getPropertySources();
-		for (PropertySource propertySource : mutablePropertySources) {
+		for (PropertySource<?> propertySource : mutablePropertySources) {
 			calculate(propertySource.getSource(), defer);
 		}
 
@@ -57,20 +57,22 @@ public class AttributeExtractTask implements Callable<Map<String, Object>> {
 		for (Map<String, Object> item : defer) {
 			result.putAll(item);
 		}
+		System.out.println(result);
 		return result;
 	}
 
 	private void calculate(Object source, List<Map<String, Object>> defer) {
+		//System.out.println(source);
 		if (source instanceof PropertySource) {
-			calculate(((PropertySource) source).getSource(), defer);
+			calculate(((PropertySource<?>) source).getSource(), defer);
 		}
 		if (source instanceof Map) {
 			Map<String, Object> map = new HashMap<>(8);
-			for (Object entry : ((Map) source).entrySet()) {
-				Map.Entry<Object, Object> element = (Map.Entry<Object, Object>) entry;
-				String key = String.valueOf(element.getKey());
+			for (Map.Entry<?, ?> entry : ((Map<?,?>) source).entrySet()) {
+				//Map.Entry<Object, Object> element = (Map.Entry<Object, Object>) entry;
+				String key = String.valueOf(entry.getKey());
 				if (key.startsWith(prefix)) {
-					map.put(key, element.getValue());
+					map.put(key, entry.getValue());
 				}
 			}
 			if (!map.isEmpty()) {
@@ -78,7 +80,7 @@ public class AttributeExtractTask implements Callable<Map<String, Object>> {
 			}
 		}
 		if (source instanceof List || source instanceof Set) {
-			Collection sources = (Collection) source;
+			Collection<?> sources = (Collection<?>) source;
 			for (Object obj : sources) {
 				calculate(obj, defer);
 			}
