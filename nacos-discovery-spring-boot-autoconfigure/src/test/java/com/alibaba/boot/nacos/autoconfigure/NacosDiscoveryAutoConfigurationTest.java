@@ -16,8 +16,6 @@
  */
 package com.alibaba.boot.nacos.autoconfigure;
 
-import java.util.Properties;
-
 import com.alibaba.boot.nacos.discovery.autoconfigure.NacosDiscoveryAutoConfiguration;
 import com.alibaba.boot.nacos.discovery.properties.NacosDiscoveryProperties;
 import com.alibaba.nacos.api.PropertyKeyConst;
@@ -27,13 +25,14 @@ import com.alibaba.nacos.spring.util.NacosBeanUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import java.util.Properties;
 
 /**
  * {@link NacosDiscoveryAutoConfiguration} Test

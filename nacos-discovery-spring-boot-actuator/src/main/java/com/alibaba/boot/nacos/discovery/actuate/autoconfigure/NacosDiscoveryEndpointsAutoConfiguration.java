@@ -17,8 +17,6 @@
 package com.alibaba.boot.nacos.discovery.actuate.autoconfigure;
 
 import com.alibaba.boot.nacos.discovery.actuate.endpoint.NacosDiscoveryEndpoint;
-
-import org.springframework.boot.actuate.autoconfigure.endpoint.condition.ConditionalOnEnabledEndpoint;
 import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -35,7 +33,7 @@ public class NacosDiscoveryEndpointsAutoConfiguration {
 
 	@Bean
 	@ConditionalOnMissingBean
-	@ConditionalOnEnabledEndpoint
+	//@ConditionalOnEnabledEndpoint
 	public NacosDiscoveryEndpoint nacosDiscoveryEndpoint() {
 		return new NacosDiscoveryEndpoint();
 	}

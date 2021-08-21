@@ -25,7 +25,6 @@ import com.alibaba.nacos.spring.core.env.NacosPropertySource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import org.springframework.boot.context.properties.ConfigurationBeanFactoryMetadata;
 import org.springframework.boot.context.properties.bind.Bindable;
 import org.springframework.boot.context.properties.bind.Binder;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -42,15 +41,16 @@ public class NacosBootConfigurationPropertiesBinder
 	private final Logger logger = LoggerFactory
 			.getLogger(NacosBootConfigurationPropertiesBinder.class);
 
-	private ConfigurationBeanFactoryMetadata beanFactoryMetadata;
+	//private ConfigurationBeanFactoryMetadata beanFactoryMetadata;
+
 	private StandardEnvironment environment = new StandardEnvironment();
 
 	public NacosBootConfigurationPropertiesBinder(
 			ConfigurableApplicationContext applicationContext) {
 		super(applicationContext);
-		this.beanFactoryMetadata = applicationContext.getBean(
-				ConfigurationBeanFactoryMetadata.BEAN_NAME,
-				ConfigurationBeanFactoryMetadata.class);
+//		this.beanFactoryMetadata = applicationContext.getBean(
+//				ConfigurationBeanFactoryMetadata.BEAN_NAME,
+//				ConfigurationBeanFactoryMetadata.class);
 	}
 
 	@Override
@@ -72,10 +72,10 @@ public class NacosBootConfigurationPropertiesBinder
 	}
 
 	private ResolvableType getBeanType(Object bean, String beanName) {
-		Method factoryMethod = this.beanFactoryMetadata.findFactoryMethod(beanName);
-		if (factoryMethod != null) {
-			return ResolvableType.forMethodReturnType(factoryMethod);
-		}
+//		Method factoryMethod = this.beanFactoryMetadata.findFactoryMethod(beanName);
+//		if (factoryMethod != null) {
+//			return ResolvableType.forMethodReturnType(factoryMethod);
+//		}
 		return ResolvableType.forClass(bean.getClass());
 	}
 
